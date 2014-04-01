@@ -1,0 +1,64 @@
+define(['./Finger'], function(Finger) {
+	"use strict";
+	
+	function Touch(container = document.body) {
+		this.container = container;
+		this.touchMap = new Map();
+		this.touchedOnce = false;
+		
+		this.container.addEventListener('touchstart', this.onTouchStart.bind(this));
+		this.container.addEventListener('touchend', this.onTouchEnd.bind(this));
+		this.container.addEventListener('touchcancel', this.onTouchCancel.bind(this));
+		this.container.addEventListener('touchmove', this.onTouchMove.bind(this));
+	}
+	
+	var p = Touch.prototype;
+	
+	p.onTouchStart = function(event) {
+		this.touchedOnce = true;
+		
+		for (var i = 0; i < event.touches.length; i++) {
+            var e = event.touches[i];
+            if (!this.touchMap.has(e.identifier)) {
+                this.touchMap.set(e.identifier, Finger.createFromEvent(e));
+            }
+        }
+	}
+	
+	p.onTouchEnd = function(event) {
+		var touchMapKeys = this.touchMap.keys();
+        for (var i = 0; i < t.length; i++) {
+            this.touchMap.get(touchMapKeys[i]).used = false;
+        }
+
+        // existing touches are set to true
+        for (var i = 0; i < event.touches.length; i++) {
+            this.touchMap.get(event.touches[i].identifier).used = true;
+        }
+
+        // remove removed touches from touchMap
+        var touchMapKeys = this.touchMap.keys();
+        for (var i = 0; i < touchMapKeys.length; i++) {
+            if (!this.touchMap.get(touchMapKeys[i]).used) {
+                this.touchMap.remove(touchMapKeys[i]);
+            }
+        }
+	}
+	
+	p.onTouchCancel = function(event) {
+		this.onTouchEnd(event);
+	}
+	
+	p.onTouchMove = function(event) {
+		event.preventDefault();
+	
+		for (var i = 0; i < event.touches.length; i++) {
+            var e = touches[i];
+            if (this.touchMap.has(e.identifier)) {
+                this.touchMap.get(e.identifier).setPositionFromEvent(e);
+            }
+        }
+	}
+	
+	return Touch;
+});

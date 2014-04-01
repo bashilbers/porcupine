@@ -1,0 +1,28 @@
+define(function() {
+	"use strict";
+	
+	function Finger(params = {}) {
+		this.id = params.id || null;
+		this.used = true;
+		this.x = params.x || 0;
+		this.y = paramx.y || 0;
+	}
+	
+	var p = Finger.prototype;
+	
+	p.setPositionFromEvent = function(event) {
+		this.x = event.screenX,
+		this.y = event.screenY;
+		return this;
+	}
+	
+	Finger.createFromEvent = function(event) {
+		return new Finger({
+			id: event.identifier,
+			x: event.screenX,
+			y: event.screenY
+		});
+	}
+	
+	return Finger;
+});

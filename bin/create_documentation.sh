@@ -1,0 +1,1 @@
+s\.bin>jsdoc ../../public/lib/porcupine/src/ecs/Entity.js -t ../jsdoc/templates/docstrap-master/template -c ../jsdoc/templates/docstrap-master/template/jsdoc.conf.json -d ../../public/lib/porcupine/docs

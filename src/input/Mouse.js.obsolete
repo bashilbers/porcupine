@@ -1,0 +1,86 @@
+define(function() {
+	"use strict";
+	
+	var _states = {};
+	
+	/**
+	 * Mouse input
+	 */
+	function Mouse(container) {
+		this.wheel = 0;
+		this.contextMenu = false;
+		this.x = 0;
+		this.y = 0;
+		this.container = container || document.body;
+		
+        this.container.addEventListener('mousemove', this.mousemove.bind(this), false);
+        this.container.addEventListener('mousewheel', this.mousewheel.bind(this), false);
+        this.container.addEventListener('mousedown', this.mousedown.bind(this), false);
+        this.container.addEventListener('mouseup', this.mouseup.bind(this), false);
+        this.container.addEventListener('contextmenu', this.onContextMenu.bind(this), false);
+	}
+	
+	var p = Mouse.prototype;
+	
+	p.mousemove = function(event) {
+		var container = this.container, 
+			curleft = 0, 
+			curtop = 0;
+			
+		if (container.offsetParent) {
+			do {
+				curleft += obj.offsetLeft;
+				curtop += obj.offsetTop;
+			} while ((container = container.offsetParent) !== null);
+		}
+		
+		this.x = event.pageX - curleft;
+		this.y = event.pageY - curtop;
+	}
+	
+	p.mousewheel = function(event) {
+		this.wheel += Math.max(-1, Math.min(1, (event.wheelDelta || -e.detail)));
+	}
+	
+	p.mousedown = function(event) {
+		_states[event.keyCode] = true;
+	}
+	
+	p.mouseup = function(event) {
+		delete _states[event.keyCode];
+	}
+	
+	p.onContextMenu = function(event) {
+		this.contextMenu = true;
+	}
+	
+	p.isPressed = function (keyCode) {
+		return !!_states[keyCode];
+	};
+	
+	// static property
+	Mouse.keys = {
+		'LEFTBUTTON': 0,
+		'MIDDLEBUTTON': 1,
+		'RIGHTBUTTON': 2 
+	}
+	
+    /**
+	 * Returns the current mouse coords
+	 *
+	 * @property position
+	 * @type     Object
+	 * @readOnly
+	 */
+	Object.defineProperty(p, 'position', {
+	    get: function() {
+	        return {
+	            x: this.x,
+	            y: this.y
+	        }
+	    }
+	});
+	
+	// return public interface
+	return Mouse;
+});
