@@ -3,13 +3,13 @@ define ->
   _keyBindings = {}
 
   ###*
-   *  Keyboard input
+   * Keyboard input
   ###
   class Keyboard
     @states =
       'UP': 'UP'
       'DOWN': 'DOWN'
-  
+
     ###*
      * Bindable keycodes
      *
@@ -92,12 +92,12 @@ define ->
      * The current sequence of keys that have been pressed
     ###
     sequence: []
-    
+
     ###*
      * The amount of miliseconds it takes for the sequence to fade out
     ###
     sequenceTimeout = 500
-    
+
     sequenceId = null
 
     constructor: (@container) ->
@@ -114,50 +114,50 @@ define ->
     onKeyDown: (e, code) =>
       keyCode = code or e.keyCode or e.which
       binding = @getBinding keyCode
-        
+
       _keyStates[keyCode] = Keyboard.states.DOWN
-      
+
       @sequence.push keyCode
-      
+
       # send sequence event
-      
+
       # set timeout to clear sequence
       clearTimeout @sequenceId if !!@sequenceId
       @sequenceId = setTimeout @clearSequence, @sequenceTimeout
 
       # dont bother with unhandled keys, NOOP
       return if not binding
-      
+
       # action might be prevented by a locked key, NOOP
       return if !!binding.locked
-      
+
       # check if we need to set locked state
       binding.locked = yes if !!binding.lockable
-      
+
       binding.action.apply binding, e
 
   onKeyUp: (e, code) =>
     keyCode = code or e.keyCode or e.which
     binding = @getBinding keyCode
-      
+
     _keyStates[keyCode] = Keyboard.states.UP
 
     # dont bother with unhandled keys, NOOP
     return if not binding
-    
+
     binding.locked = no
     binding.action.apply binding, e
-  
+
   isDown: (key) ->
     @getKeyState key is Keyboard.states.DOWN
-  
+
   isUp: (key) ->
     @getKeyState key is Keyboard.states.UP
-  
+
   getKeyState: (key) ->
     key = Keyboard.keys[key] if typeof key is 'string'
     _keyStates[key]
-  
+
   ###*
    * Clears the current sequence so that a new one can start.
    *
@@ -165,7 +165,7 @@ define ->
   ###
   clearSequence: ->
     @sequence.length = 0
-    
+
   getBinding: (keyCode) ->
     if not _keyBindings[keyCode]? then _keyBindings[keyCode] else null
 
@@ -174,14 +174,14 @@ define ->
       locked: no
       lockable: !!lockIt
       action: action
-  
+
   getCurrentKeyPressCode:  ->
     for code in _keyStates
       if _keyStates.hasOwnProperty code && _keyStates[code]?
         code
-  
+
   unlock: (key) ->
     @getBinding(key).isCurrentlyLocking = no
-  
+
   unbind: (key) ->
     delete bindings[key]

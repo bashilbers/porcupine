@@ -1,4 +1,4 @@
-define (require) ->
+define ->
   audioTypes =
     ogg:  'audio/ogg codecs="vorbis"'
     opus: 'audio/ogg codecs="opus"'
@@ -7,7 +7,7 @@ define (require) ->
     mp4:  'audio/mp4 codecs="mp4a.40.5"'
     wav:  'audio/wav codecs="1"'
     webm: 'audio/webm codecs="vorbis"'
-  
+
   videoTypes =
     ogg:  'video/ogg codecs="theora, vorbis"'
     mp4:  'video/mp4 codecs="avc1.4D401E, mp4a.40.2"'
@@ -37,7 +37,7 @@ define (require) ->
      * @type Boolean
     ###
     hasCrypto: !!window.crypto and !!window.crypto.getRandomValues
-    
+
     ###*
      * Whether or not web workers are supported
      *
@@ -45,7 +45,7 @@ define (require) ->
      * @type Boolean
     ###
     hasWorkers: !!window.Worker
-    
+
     ###*
      * Whether or not Blob URLs are supported
      *
@@ -53,7 +53,7 @@ define (require) ->
      * @type Boolean
     ####
     hasBlobUrls: !!window.Blob and !!window.URL and !!window.URL.createObjectURL
-    
+
     ###*
      * Whether or not typed arrays are supported
      *
@@ -61,7 +61,7 @@ define (require) ->
      * @type Boolean
     ####
     hasTypedArrays: !!window.ArrayBuffer
-    
+
     ###*
      * Whether or not the filesystem API is supported
      *
@@ -102,7 +102,7 @@ define (require) ->
       ('ontouchstart' in window) or
       window.navigator.isCocoonJS or
       (window.navigator.maxTouchPoints > 0)
-    
+
     ###*
      * Whether or not the gamepad API is supported
      *
@@ -112,7 +112,7 @@ define (require) ->
     hasGamepadApi: !!navigator.webkitGetGamepads or
       !!navigator.webkitGamepads or
       (navigator.userAgent.indexOf 'Firefox/' isnt -1)
-    
+
     ###*
      * The current user agent string
      *
@@ -120,7 +120,7 @@ define (require) ->
      * @type String
     ####
     userAgent: if window.navigator then window.navigator.userAgent else 'nodejs'
-            
+
     ###*
      * Whether or not the visitor is viewing from a mobile device
      *
@@ -166,7 +166,7 @@ define (require) ->
     hasAccelerometer: (typeof (window.DeviceMotionEvent) isnt 'undefined') or
       ((typeof (window.Windows) isnt 'undefined') and
         (typeof (window.Windows.Devices.Sensors.Accelerometer) is 'function'))
-    
+
     ###*
      * Whether or not orientation is supported
      *
@@ -182,7 +182,7 @@ define (require) ->
      * @type Boolean
     ####
     hasLocalStorage: !!window.localStorage
-    
+
     pixelRatio: window.devicePixelRatio or 1
     isIphone: navigator.userAgent.toLowerCase().indexOf 'iphone' != -1
     isIpod: navigator.userAgent.toLowerCase().indexOf 'ipod' != -1
@@ -205,7 +205,7 @@ define (require) ->
       if @hasMemoryProfiling
         window.performance.memory.usedJSHeapSize
       else 0
-  
+
     getTotalHeap: ->
       if @hasMemoryProfiling
         window.performance.memory.totalJSHeapSize
@@ -219,10 +219,10 @@ define (require) ->
 
     video: do ->
       videoTest = document.createElement 'video'
-      
+
       supports: (format) ->
         !!videoTest.canPlayType(videoTypes.format).replace /^no$/, ''
-  
+
     getPreferredRenderingType: ->
       useWebgl = if @hasWebgl
         navigator.userAgent.toLowerCase().indexOf 'msie' isnt -1

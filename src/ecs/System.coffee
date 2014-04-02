@@ -7,9 +7,16 @@
 ###
 define ->
   class System
+    ###*
+     * The main game engine
+     * @type Engine
+    ###
     engine: null
+
     isStarted: no
+
     entities: []
+
     # these components need to be matched for this
     # system to be active on an entity
     requiredComponents: []
@@ -26,7 +33,7 @@ define ->
     start: ->
       @entities = @engine.entityManager.findBy @requiredComponents
       @isStarted = yes
-        
+
     ###*
      * This method is called every frame by the SystemManager
      * until the system is removed from the engine.
@@ -36,7 +43,7 @@ define ->
     ###
     run: (time) ->
       throw new Error 'Implement run in a derived subsystem!'
-        
+
     ###*
      * Called when this system is being removed from the engine context.
     ###

@@ -6,24 +6,28 @@ define (require) ->
   class Log
     addLogger: (logger) ->
       loggers.push logger
-  
-    log: (type, message) ->
+
+    _log: (type = 'log', message) ->
       logger[type].call null, message, _timer.now() for logger in loggers
-  
+
     warn: (message) ->
-      @log Log.level.WARN, message
-  
+      @_log Log.level.WARN, message
+
     debug: (message) ->
-      @log Log.level.DEBUG, message
-  
+      @_log Log.level.DEBUG, message
+
     error: (message) ->
-      @log Log.level.ERROR, message
-  
+      @_log Log.level.ERROR, message
+
     info: (message) ->
-      @log Log.level.INFO, message
-  
+      @_log Log.level.INFO, message
+
+    log: (message) ->
+      @_log Log.level.LOG, message
+
     @level:
-      WARN:'warn'
-      DEBUG:'debug'
-      ERROR:'error'
-      INFO:'info'
+      WARN: 'warn'
+      DEBUG: 'debug'
+      ERROR: 'error'
+      INFO: 'info'
+      LOG: 'log'

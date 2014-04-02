@@ -184,7 +184,7 @@ define ->
      * @param  Object constructor
      * @return Boolean
     ###
-    inherits: (object, constructor) ->
+    implement:sf (object, constructor) ->
       return yes if object instanceof constructor
 
       k = b = true

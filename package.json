@@ -2,19 +2,36 @@
 	"name": "Porcupine",
 	"version": "0.0.1",
 	"description": "Simple JavaScript game engine",
-	"author": "bas Hilbers <bashilbers@gmail.com>",
+	"author": "Sebastiaan Hilbers <bashilbers@gmail.com>",
 	"contributors": [],
-	"license": "",
-	"homepage": "",
-	"repository": {},
+	"license": "MIT",
+	"homepage": "https://github.com/bashilbers/porcupine",
+    "bugs": "https://github.com/bashilbers/porcupine/issues",
+	"repository": {
+        "type": "git",
+        "url": "https://github.com/bashilbers/porcupine.git"
+    },
 	"private": true,
+    "main": "src/core.coffee",
 	"dependencies": {},
 	"devDependencies": {
-        "grunt": "~0.4.2",
         "coffee-script": "~1.6.3",
+        "grunt": "~0.4.2",
+        "grunt-contrib-concat": "~0.3",
+        "grunt-contrib-jshint": "~0.8",
+        "grunt-coffeelint": "*",
+        "grunt-contrib-uglify": "~0.3",
         "grunt-contrib-clean": "~0.4.0",
         "grunt-contrib-coffee": "~0.7.0",
         "grunt-contrib-watch": "~0.5.3",
+        "grunt-contrib-yuidoc": "~0.5",
+        "grunt-browserify": "~1.3",
+        "grunt-mocha": "git+https://github.com/englercj/grunt-mocha.git",
         "grunt-readme-generator": "*"
+    },
+    "scripts": {
+        "build": "grunt build",
+        "test": "grunt test",
+        "start": "grunt dev"
     }
 }
