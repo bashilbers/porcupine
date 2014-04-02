@@ -175,3 +175,23 @@ define ->
     getAbsoluteUrl: (url) ->
       a = document.createElement 'a'
       a.href = url
+
+    ###*
+     * Check if object has all the properties/methods which
+     * are found in the given constructor
+     *
+     * @param  Object object
+     * @param  Object constructor
+     * @return Boolean
+    ###
+    inherits: (object, constructor) ->
+      return yes if object instanceof constructor
+
+      k = b = true
+      po = object.constructor.prototype
+      pc = constructor.prototype
+
+      for prop of pc
+        b = b && prop in po
+
+      return !!k and b
